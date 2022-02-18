@@ -25,25 +25,72 @@
       </div>
     <div class="box">
     <div class="questionlist">
-      <p>Question  1</p>
-      <p>Question  2</p>
-      <p>Question  3</p>
-      <p>Question  4</p>
+        <p @click="activeTab='q1'">Question 1</p>
+        <p @click="activeTab='q2'">Question 2</p>
+        <p @click="activeTab='q3'">Question 3</p>
+        <p @click="activeTab='q4'">Question 4</p>
+
     </div>
     <div class="question">
-      <h2 class="fs-title">Question 1</h2>
+        <q1 v-if="activeTab === 'q1'"/>
+        <q2 v-if="activeTab === 'q2'"/>
+        <q3 v-if="activeTab === 'q3'"/>
+        <q4 v-if="activeTab === 'q4'"/>
+
+      <!-- <h2 class="fs-title">Question 1</h2>
     <h3 class="fs-subtitle">What do you consider your main strengths to be?</h3>
-    <!--<p class="help-block">List your strengths here.</p>-->
+    <p class="help-block">List your strengths here.</p>
     <textarea class="form-control" name="CAT_Custom_1" id="CAT_Custom_1" rows="4" onkeydown="if(this.value.length>=4000)this.value=this.value.substring(0,3999);"></textarea>
-    <!-- <input type="button" name="next" class="next action-button" value="Next" /> -->
+    <input type="button" name="next" class="next action-button" value="Next" /> -->
     </div>
   </div>
+  <div class="buttons">
    <div>
-                    <button @click="previous()">Previous</button>
+                    <button class="button" @click="previous()">Previous</button>
                 </div>
-  <div><button>Submit</button></div>
+  <div><button class="button" >Submit</button></div>
+  </div>
   </div>
 </template>
+<script>
+import progressbar from '@/components/progressbar'
+import q1 from './q1.vue'
+import q2 from './q2.vue'
+import q3 from './q3.vue'
+import q4 from './q4.vue'
+export default{
+  data () {
+    return {
+      activeTab: 'q1'
+    }
+  },
+  components: {
+    progressbar,
+    q1,
+    q2,
+    q3,
+    q4
+  },
+  methods: {
+    per () {
+      this.$router.push('/personal')
+    },
+    pro () {
+      this.$router.push('/profile')
+    },
+    exp () {
+      this.$router.push('/expertise')
+    },
+    int () {
+      this.$router.push('/interview')
+    },
+    previous () {
+      this.$router.push('/expertise')
+    }
+  }
+}
+</script>
+
 <style scoped>
 .box{
   display:flex;
@@ -123,33 +170,28 @@
 .progress {
   height: 20px;
 }
-
+#heading {
+  text-transform: uppercase;
+  color: #673ab7;
+  font-weight: normal;
+}
 .progress-bar {
   background-color: #673ab7;
 }
-</style>
-<script>
-import progressbar from '@/components/progressbar'
-export default{
-  components: {
-    progressbar
-  },
-  methods: {
-    per () {
-      this.$router.push('/personal')
-    },
-    pro () {
-      this.$router.push('/profile')
-    },
-    exp () {
-      this.$router.push('/expertise')
-    },
-    int () {
-      this.$router.push('/interview')
-    },
-    previous () {
-      this.$router.push('/expertise')
-    }
-  }
+.buttons{
+  display:flex;
+  justify-content: space-evenly;
+  align-items:center ;
 }
-</script>
+.button{
+  background-color: #673ab7;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  width:100px;
+  color: white;
+  position:relative;
+margin-top:100%;
+}
+</style>

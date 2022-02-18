@@ -1,74 +1,148 @@
 <template>
-<div>
+  <div>
     <div>
-          <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
-            <h2 id="heading">Sample Project</h2>
-            <form id="msform">
-              <ul id="progressbar">
-                <li id="account" class="active" @click="per()"><strong>Personal</strong></li>
-                <li id="personal" class="active" @click="pro()"><strong>Profile</strong></li>
-                <li id="payment" @click="exp()"><strong>Expertise</strong></li>
-                <li id="confirm" @click="int()"><strong>Interview</strong></li>
-              </ul>
-              <div class="progress">
-                <div
-                  class="
-                    progress-bar progress-bar-striped progress-bar-animated
-                  "
-                  role="progressbar"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                ></div>
-              </div>
-            </form>
-    </div>
+      <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+        <h2 id="heading">Sample Project</h2>
+        <form id="msform">
+          <ul id="progressbar">
+            <li id="account" class="active" @click="per()">
+              <strong>Personal</strong>
+            </li>
+            <li id="personal" class="active" @click="pro()">
+              <strong>Profile</strong>
+            </li>
+            <li id="payment" @click="exp()"><strong>Expertise</strong></li>
+            <li id="confirm" @click="int()"><strong>Interview</strong></li>
+          </ul>
+          <div class="progress">
+            <div
+              class="progress-bar progress-bar-striped progress-bar-animated"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            ></div>
+          </div>
+        </form>
       </div>
-  <div class="form-card">
-    <div class="row">
-      <!-- <div class="col-7">
-        <h2 class="fs-title">Personal Information:</h2>
-      </div> -->
     </div>
-    <label class="fieldlabels">About You: *</label>
-    <input type="textarea" v-model="aboutYou" name="aboutYou" placeholder="Write a short bio " />
-    <label class="fieldlabels">Teaching Experience: *</label>
-    <input
-      type="textarea"
-      v-model="teachingExperience"
-      name="teachingExperience"
-      placeholder="Tell us about your teaching experience"
-    />
-    <label class="fieldlabels">Work History: *</label>
-    <div v-for="(input,index) in addwork" :key=" `phoneInput-${index}`">
-    <input type="text" v-model="input.work" name="workHistory" placeholder="Company" />
-    <label class="fieldlabels">Active From: *</label>
-    <input type="date" v-model="activeFrom" name="activeFrom" placeholder="Active From" />
-    <label class="fieldlabels">Active To: *</label>
-    <input type="date" v-model="activeTo" name="activeTo" placeholder="Active To" />
+    <div class="form-card">
+      <div class="side">
+        <label class="fieldlabels">About You: </label>
+        <p>*</p>
+        <input
+          type="textarea"
+          v-model="aboutYou"
+          name="aboutYou"
+          placeholder="Write a short bio "
+        />
+      </div>
+      <div class="sid">
+        <label class="fieldlabels">Teaching Experience: </label>
+        <p>*</p>
+        <input
+          type="textarea"
+          v-model="teachingExperience"
+          name="teachingExperience"
+          placeholder="Tell us about your teaching experience"
+        />
+      </div>
+        <h5 class="fieldlabels">Work History</h5>
+
+        <!-- <div v-for="(input, index) in addwork" :key="`phoneInput-${index}`"> -->
+        <div v-for="(input, index) in addwork" :key="`${index}`">
+          <div class="cn">
+        <label class="fieldlabels">Company Name:</label>
+        <p>*</p>
+          <input
+            type="text"
+            v-model="addwork[index].work"
+            name="workHistory"
+            placeholder="Company"
+          />
+          </div>
+          <div class="af">
+          <label class="fieldlabels">Active From:</label>
+          <p>*</p>
+          <input
+            type="date"
+            v-model="addwork[index].activeFrom"
+            name="activeFrom"
+            placeholder="Active From"
+          />
+          </div>
+          <div class="at">
+          <label class="fieldlabels">Active To:</label>
+          <p>*</p>
+          <input
+            type="date"
+            v-model="addwork[index].activeTo"
+            name="activeTo"
+            placeholder="Active To"
+          />
+          </div>
+        </div>
+
+      <div>
+        <span id="addanotherjob" @click="addField(addwork)"
+          >+ Add Another Job</span
+        >
+      </div>
+        <h5 class="fieldlabels">Education</h5>
+
+        <!-- <div
+          v-for="(input, index) in addeducation"
+          :key="`phoneInput-${index}`"
+        > -->
+        <div
+          v-for="(input, index) in addeducation"
+          :key="`${index}`"
+        >
+        <div class="school">
+          <label class="fieldlabels">School Name:</label>
+          <p>*</p>
+          <input
+            type="text"
+            v-model="addeducation[index].education"
+            name="education"
+            placeholder="School"
+          />
+        </div>
+        <div class="enrolled">
+          <label class="fieldlabels">Enrolled:</label>
+          <p>*</p>
+          <input
+            type="month"
+            v-model="addeducation[index].enrolled"
+            name="enrolled"
+            placeholder="Enrolled Year"
+          />
+        </div>
+        <div class="graduated">
+          <label class="fieldlabels">Graduated:</label>
+          <p>*</p>
+          <input
+            type="month"
+            v-model="addeducation[index].graduated"
+            name="graduated"
+            placeholder="Graduated Year"
+          />
+        </div>
+        </div>
+      <div>
+        <span id="addanotherschool" @click="addFields(addeducation)"
+          >+ Add Another School</span
+        >
+      </div>
     </div>
-   <div>
-     <span @click="addField(input,addwork)">+ Add Another Job</span>
-     </div>
-    <label class="fieldlabels">Education: *</label>
-    <div v-for="(input,index) in addeducation" :key=" `phoneInput-${index}`">
-    <input type="text" v-model="education" name="education" placeholder="School" />
-    <label class="fieldlabels">Enrolled: *</label>
-    <input type="month" v-model="enrolled" name="enrolled" placeholder="Enrolled Year" />
-    <label class="fieldlabels">Graduated: *</label>
-    <input type="month" v-model="graduated" name="graduated" placeholder="Graduated Year" />
+    <div class="buttons">
+      <div>
+        <button class="button" @click="previous()">Previous</button>
+      </div>
+      <div>
+        <button class="button" @click="next()">Next</button>
+      </div>
     </div>
-   <div>
-     <span @click="addField(input,addeducation)">+ Add Another Job</span>
-     </div>
-    <!-- + Add Another School -->
   </div>
-  <div>
-                    <button @click="next()">Next</button>
-                </div>
-  <div>
-                    <button @click="previous()">Previous</button>
-                </div>
-</div>
 </template>
 <script>
 import progressbar from '@/components/progressbar'
@@ -83,12 +157,25 @@ export default {
       education: null,
       enrolled: null,
       graduated: null,
-      addwork: [{work: ''}],
-      addeducation: [{ed: ''}]
+      addwork: [{ work: '', activeFrom: '', activeTo: '' }],
+      addeducation: [{ ed: '' }],
+      addanotherjob: false,
+      addanotherschool: false,
+      work: null
     }
   },
-  components: {
-    progressbar
+  // components: {
+  //   progressbar
+  // },
+  created () {
+    this.aboutYou = localStorage.getItem('aboutYou')
+    this.teachingExperience = localStorage.getItem('teachingExperience')
+    // this.addwork.work = localStorage.getItem('work')
+    // this.addwork.activeFrom = localStorage.getItem('activeFrom')
+    // this.addwork.activeTo = localStorage.getItem('activeTo')
+    // this.addeducation.education = localStorage.getItem('education')
+    // this.addeducation.enrolled = localStorage.getItem('enrolled')
+    // this.addeducation.graduated = localStorage.getItem('graduated')
   },
   methods: {
     per () {
@@ -104,56 +191,215 @@ export default {
       this.$router.push('/interview')
     },
     async next () {
-      if (this.aboutYou === null ||
+      if (
+        this.aboutYou === null ||
         this.teachingExperience === null ||
-        this.workHistory === null ||
-        this.activeFrom === null ||
-        this.activeTo === null ||
-        this.education === null ||
-        this.enrolled === null ||
-        this.graduated === null) {
+        // this.work === null ||
+        // this.activeFrom === null ||
+        // this.activeTo === null ||
+        // this.education === null ||
+        // this.enrolled === null ||
+        // this.graduated === null
+        this.addwork.work === '' ||
+        this.addwork.activeFrom === null ||
+        this.addwork.activeTo === null ||
+        this.addeducation.education === '' ||
+        this.addeducation.enrolled === null ||
+        this.addeducation.graduated === null
+      ) {
         swal({
           text: 'Please fill all the details',
           icon: 'warning'
         })
         return
       }
-      if (this.activeTo < this.activeFrom) {
-        swal({text: 'Active To date should not be less than Active from date'})
+      if (this.addwork.activeTo < this.addwork.activeFrom) {
+        console.log('Hi')
+        swal({
+          text: 'Active To date should not be less than Active from date'
+        })
         return
       }
-      if (this.graduated < this.enrolled) {
-        swal({text: 'The graduated date must not be earlier than the enrolled date.'})
+      if (this.addeducation.graduated < this.addeducation.enrolled) {
+        swal({
+          text: 'The graduated date must not be earlier than the enrolled date.'
+        })
         return
       }
       localStorage.setItem('aboutYou', this.aboutYou)
       localStorage.setItem('teachingExperience', this.teachingExperience)
-      localStorage.setItem('workHistory', this.workHistory)
-      localStorage.setItem('activeFrom', this.activeFrom)
-      localStorage.setItem('activeTo', this.activeTo)
-      localStorage.setItem('education', this.education)
-      localStorage.setItem('enrolled', this.enrolled)
-      localStorage.setItem('graduated', this.graduated)
+      localStorage.setItem('workHistory', this.addwork.workHistory)
+      localStorage.setItem('activeFrom', this.addwork.activeFrom)
+      localStorage.setItem('activeTo', this.addwork.activeTo)
+      localStorage.setItem('education', this.addeducation.education)
+      localStorage.setItem('enrolled', this.addeducation.enrolled)
+      localStorage.setItem('graduated', this.addeducation.graduated)
       this.$router.push('/expertise')
     },
     previous () {
       this.$router.push('/personal')
     },
-    addField (value, fieldType) {
-      fieldType.push({value: ''})
+    addField (fieldType) {
+      const index = fieldType.length - 1
+      if (!fieldType[index].work || !fieldType[index].activeFrom || !fieldType[index].activeTo) {
+        this.addanotherjob = false
+      } else {
+        this.addanotherjob = true
+        const obj = {}
+        obj['work'] = ''
+        obj['activeFrom'] = ''
+        obj['activeTo'] = ''
+        fieldType.push(obj)
+        console.log(fieldType)
+      }
+    },
+    addFields (fieldType) {
+      const index = fieldType.length - 1
+      if (!fieldType[index].education || !fieldType[index].enrolled || !fieldType[index].graduated) {
+        this.addanotherschool = false
+      } else {
+        this.addanotherschool = true
+        const obj = {}
+        obj['education'] = ''
+        obj['enrolled'] = ''
+        obj['graduated'] = ''
+        fieldType.push(obj)
+        console.log(fieldType)
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-.form-card{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    text-align: left;
-    padding: 50px;
+.side {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: center;
 }
+.side p {
+  color: red;
+}
+.sid {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: center;
+  margin-right: 73px;
+}
+.sid p {
+  color: red;
+}
+.cn {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: center;
+  margin-right: 50px;
+}
+.cn p {
+  color: red;
+}
+.at {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: center;
+  margin-left: 50px;
+}
+.at p {
+  color: red;
+}
+.af {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: center;
+  margin-left: 30px;
+}
+.af p {
+  color: red;
+}
+.enrolled {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: center;
+  margin-left: 35px;
+}
+.enrolled p {
+  color: red;
+}
+.graduated {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: center;
+  margin-left: 15px;
+}
+.graduated p {
+  color: red;
+}
+.school {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: center;
+  margin-right: 50px;
+}
+.school p {
+  color: red;
+}
+.form-card label {
+  text-align: left;
+}
+.form-card input[type="textarea"] {
+  width: 400px;
+  padding: 12px 20px;
+  margin-left: 20px;
+  box-sizing: border-box;
+  text-align: center;
+  display: inline-block;
+}
+.form-card input[type="month"] {
+  width: 400px;
+  padding: 12px 20px;
+  margin-left: 20px;
+  box-sizing: border-box;
+  text-align: center;
+  display: inline-block;
+}
+.form-card input[type="text"] {
+  width: 400px;
+  padding: 12px 20px;
+  margin-left: 20px;
+  box-sizing: border-box;
+  text-align: center;
+  display: inline-block;
+}
+.form-card input[type="date"] {
+  width: 400px;
+  padding: 12px 20px;
+  margin-left: 20px;
+  box-sizing: border-box;
+  text-align: center;
+  display: inline-block;
+}
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+.button {
+  background-color: #673ab7;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  width: 100px;
+  color: white;
+}
+.form-card {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: left;
+  padding: 50px;
+  align-items: center;
+}
+
 #progressbar {
   margin-bottom: 30px;
   overflow: hidden;
@@ -228,5 +474,10 @@ export default {
 
 .progress-bar {
   background-color: #673ab7;
+}
+#heading {
+  text-transform: uppercase;
+  color: #673ab7;
+  font-weight: normal;
 }
 </style>

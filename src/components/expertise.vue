@@ -25,27 +25,74 @@
       </div>
     <div class="box">
       <div class="list">
-        <p>Computer Software</p>
-        <p>Computer Science</p>
-        <p>Engineering</p>
+        <p @click="activeTab='computersoftware'">Computer Software </p>
+        <p @click="activeTab='computerscience'">Computer Science</p>
+        <p @click="activeTab='engineering'">Engineering</p>
       </div>
       <div class="options">
-        <div class="checkboxgroup">
-          <span><input type="checkbox" /> checkbox 1</span>
-          <span><input type="checkbox" /> checkbox 2</span>
-          <span><input type="checkbox" /> checkbox 3</span>
-          <span><input type="checkbox" /> checkbox 4</span>
-        </div>
+        <computersoftware v-if="activeTab === 'computersoftware'"/>
+        <computerscience v-if="activeTab === 'computerscience'"/>
+        <engineering v-if="activeTab === 'engineering'"/>
       </div>
     </div>
-     <div>
+     <!-- <div>
                     <button @click="next()">Next</button>
                 </div>
   <div>
                     <button @click="previous()">Previous</button>
+                </div> -->
+                <div class="buttons">
+  <div>
+                    <button class="button" @click="previous()">Previous</button>
                 </div>
+  <div>
+                    <button class="button" @click="next()">Next</button>
+                </div>
+</div>
   </div>
 </template>
+<script>
+import progressbar from '@/components/progressbar'
+import computersoftware from './computersoftware.vue'
+import computerscience from './computerscience.vue'
+import engineering from './engineering.vue'
+export default {
+  data () {
+    return {
+      activeTab: 'computersoftware'
+    }
+  },
+  components: {
+    progressbar,
+    computersoftware,
+    engineering,
+    computerscience
+  },
+  methods: {
+    per () {
+      this.$router.push('/personal')
+    },
+    pro () {
+      this.$router.push('/profile')
+    },
+    exp () {
+      this.$router.push('/expertise')
+    },
+    int () {
+      this.$router.push('/interview')
+    },
+    next () {
+      this.$router.push('/interview')
+    },
+    previous () {
+      this.$router.push('/profile')
+    },
+    componeclicked () {
+      this.$emit('componeclicked', this.item)
+    }
+  }
+}
+</script>
 <style scoped>
 .box {
   display: flex;
@@ -148,32 +195,25 @@ p {
 .progress-bar {
   background-color: #673ab7;
 }
-</style>
-<script>
-import progressbar from '@/components/progressbar'
-export default {
-  components: {
-    progressbar
-  },
-  methods: {
-    per () {
-      this.$router.push('/personal')
-    },
-    pro () {
-      this.$router.push('/profile')
-    },
-    exp () {
-      this.$router.push('/expertise')
-    },
-    int () {
-      this.$router.push('/interview')
-    },
-    next () {
-      this.$router.push('/interview')
-    },
-    previous () {
-      this.$router.push('/profile')
-    }
-  }
+.buttons{
+  display:flex;
+  justify-content: space-evenly;
+  align-items:center ;
 }
-</script>
+.button{
+  background-color: #673ab7;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  width:100px;
+  color: white;
+  position:relative;
+margin-top:100%;
+}
+#heading {
+  text-transform: uppercase;
+  color: #673ab7;
+  font-weight: normal;
+}
+</style>

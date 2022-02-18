@@ -33,61 +33,80 @@
             <p>*</p>
             <input type="text" v-model="name" name="name" placeholder="Name" />
           </div>
-          <!-- <div class="['side',isEmailValid()]">
-            <label class="fieldlabels">Email:</label>
-            <p>*</p>
-            <input for="email" type="email" pattern=".+@globex\.com" v-model="email" name="email" placeholder="Email Id" @blur="validateEmail" required/>
-          </div> -->
           <div class="side">
-<label class="control-label requiredField" for="email">
-       Email<span style="color:red">*</span>
-    </label>
-    <input class="form-control" @change="isEmailValid" v-model="email" type="email" />
-    <span v-show="wrongEmail" style="color:red">Incorrect email address</span>
+            <label class="control-label requiredField" for="email">
+              Email :<span style="color: red">*</span>
+            </label>
+            <input
+              class="form-control"
+              @input="isEmailValid"
+              v-model="email"
+              type="email"
+            />
+          </div>
+          <div>
+            <span v-show="wrongEmail" style="color: red"
+              >Incorrect email address</span
+            >
           </div>
           <div class="side">
-            <label class="fieldlabels">Mobile: </label>
+            <label class="fieldlabels">Mobile</label>
             <p>*</p>
-            <input type="text" v-model="value" name="mobile" placeholder="Mobile Number" @input="acceptNumber"/>
+            <input
+              type="text"
+              v-model="value"
+              name="mobile"
+              placeholder="Mobile Number"
+              @input="acceptNumber"
+            />
           </div>
-          <div class="way">
+          <div class="way" >
             <label> what are you?</label>
             <p>*</p>
-            <input type="radio"  name="radio" />University Student
-            <input type="radio"  name="radio" />Professional
+            <input type="radio" name="radio" required/>University Student
+            <input type="radio" name="radio" required/>Professional
           </div>
-          <div class="side">
+          <div class="sides">
             <label class="fieldlabels">University: </label>
             <p>*</p>
-            <input type="text"  v-model="university" name="university" placeholder="University" />
+            <input
+              type="text"
+              v-model="university"
+              name="university"
+              placeholder="University"
+            />
           </div>
           <div class="side">
             <label class="fieldlabels">Major: </label>
             <p>*</p>
-            <input type="text" v-model="major" name="major" placeholder="Major" />
+            <input
+              type="text"
+              v-model="major"
+              name="major"
+              placeholder="Major"
+            />
           </div>
-          <div class="side">
+          <div class="sid">
             <label class="fieldlabels">Graduation Date: </label>
             <p>*</p>
             <input
               type="date"
               name="graduationDate"
               placeholder="Graduation Date"
+              v-model="graduationDate"
             />
           </div>
           <div class="side">
-            Do you have a tax ID ? <input type="radio"   name="rad" />I have a
-            tax id<input type="radio"  name="rad" />I don't have a tax id
+            <label class="fieldlabels">Do you have a tax ID ? </label>
+            <p>*</p>
+            <input type="radio" name="rad" />I have a tax id<input
+              type="radio"
+              name="rad"
+            />I don't have a tax id
           </div>
-        </div>
-        <!-- <input
-                  type="button"
-                  name="next"
-                  class="next action-button"
-                  value="Next"
-                /> -->
-        <div>
-          <button @click="next()">Next</button>
+          <div>
+            <button class="button" @click="next()">Next</button>
+          </div>
         </div>
       </div>
     </div>
@@ -95,8 +114,10 @@
 </template>
 <script>
 import swal from 'sweetalert'
+import {mapGetters} from 'vuex'
 import progressbar from '@/components/progressbar'
-const emailRe = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+const emailRe =
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 export default {
   data () {
     return {
@@ -105,12 +126,22 @@ export default {
       mobile: null,
       university: null,
       major: null,
-      graduationDate: null,
-      value: ''
+      graduationDate: '',
+      value: '',
+      radiovalue: ''
     }
   },
-  components: {
-    progressbar
+  // components: {
+  //   progressbar
+  // },
+  created () {
+    this.name = localStorage.getItem('name')
+    this.email = localStorage.getItem('email')
+    this.value = localStorage.getItem('value')
+    this.university = localStorage.getItem('university')
+    this.major = localStorage.getItem('major')
+    this.radiovalue = localStorage.getItem('radio')
+    this.graduationDate = localStorage.getItem('graduationDate')
   },
   methods: {
     isEmailValid () {
@@ -120,31 +151,36 @@ export default {
         this.wrongEmail = true
       }
     },
+    watch: {
+      'name' () {
+        this.name = name
+      }
+    },
+    computed: {
+      ...mapGetters('name')
+    },
     acceptNumber () {
-      var x = this.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/)
-      this.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '')
+      var x = this.value
+        .replace(/\D/g, '')
+        .match(/(\d{0,3})(\d{0,3})(\d{0,4})/)
+      this.value = !x[2]
+        ? x[1]
+        : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '')
     },
     async next () {
-    //   if (
-    //     this.name === null ||
-    //     this.name === '' ||
-    //     this.email === null ||
-    //     this.email === '' ||
-    //     this.mobile === null ||
-    //     this.mobile === '' ||
-    //     this.university === null ||
-    //     this.university === '' ||
-    //     this.major === null ||
-    //     this.major === '' ||
-    //     this.graduationDate === null ||
-    //     this.graduationDate === ''
-    //   )
-      if (!this.name === null ||
-        !this.email === null ||
-        !this.mobile === null ||
-        !this.university === null ||
-        !this.major === null ||
-        !this.graduationDate === null) {
+      // console.log('name', this.name)
+      // console.log('email', this.email)
+      // console.log('mobile', this.value)
+      // console.log('university', this.university)
+      // console.log('major', this.major)
+      if (
+        this.name === null ||
+        this.email === null ||
+        this.value === null ||
+        this.university === null ||
+        this.major === null ||
+        this.graduationDate === null
+      ) {
         swal({
           text: 'Please fill all the details',
           icon: 'warning'
@@ -156,8 +192,10 @@ export default {
       localStorage.setItem('value', this.value)
       localStorage.setItem('university', this.university)
       localStorage.setItem('major', this.major)
+      localStorage.setItem('radio', this.radiovalue)
       localStorage.setItem('graduationDate', this.graduationDate)
-
+      this.$store.dispatch('setData', this.name)
+      
       this.$router.push('/profile')
     },
     per () {
@@ -235,10 +273,34 @@ p {
   display: flex;
   margin-bottom: 20px;
 }
+.sides {
+  display: flex;
+  margin-bottom: 20px;
+  margin-right: 30px;
+}
+.sid {
+  display: flex;
+  margin-bottom: 20px;
+  margin-right: 80px;
+}
 .side p {
   color: red;
 }
-
+.sides p {
+  color: red;
+}
+.sid p {
+  color: red;
+}
+.button{
+  background-color: #673ab7;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  width:100px;
+  color: white;
+}
 #heading {
   text-transform: uppercase;
   color: #673ab7;
