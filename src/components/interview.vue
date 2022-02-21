@@ -5,10 +5,10 @@
             <h2 id="heading">Sample Project</h2>
             <form id="msform">
               <ul id="progressbar">
-                <li id="account" class="active" @click="per()"><strong>Personal</strong></li>
-                <li id="personal" class="active" @click="pro()"><strong>Profile</strong></li>
-                <li id="payment" class="active" @click="exp()"><strong>Expertise</strong></li>
-                <li id="confirm" class="active" @click="int()"><strong>Interview</strong></li>
+                <li id="account" class="active" ><strong>Personal</strong></li>
+                <li id="personal" class="active" ><strong>Profile</strong></li>
+                <li id="payment" class="active" ><strong>Expertise</strong></li>
+                <li id="confirm" class="active" ><strong>Interview</strong></li>
               </ul>
               <div class="progress">
                 <div
@@ -72,20 +72,20 @@ export default{
     q4
   },
   methods: {
-    per () {
-      this.$router.push('/personal')
-    },
-    pro () {
-      this.$router.push('/profile')
-    },
-    exp () {
-      this.$router.push('/expertise')
-    },
-    int () {
-      this.$router.push('/interview')
-    },
+    // per () {
+    //   this.$router.push('/personal')
+    // },
+    // pro () {
+    //   this.$router.push('/profile')
+    // },
+    // exp () {
+    //   this.$router.push('/expertise')
+    // },
+    // int () {
+    //   this.$router.push('/interview')
+    // },
     previous () {
-      this.$router.push('/expertise')
+      this.$router.push('/expertise/0/0')
     }
   }
 }

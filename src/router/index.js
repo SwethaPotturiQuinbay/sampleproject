@@ -21,7 +21,7 @@ export default new Router({
       component: personal
     },
     {
-      path: '/profile',
+      path: '/profile/:i/:j',
       name: 'profile',
       component: profile
     },
@@ -31,7 +31,7 @@ export default new Router({
       component: interview
     },
     {
-      path: '/expertise',
+      path: '/expertise/:i/:j',
       name: 'expertise',
       component: expertise
     }

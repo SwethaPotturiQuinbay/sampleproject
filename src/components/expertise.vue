@@ -5,10 +5,10 @@
             <h2 id="heading">Sample Project</h2>
             <form id="msform">
               <ul id="progressbar">
-                <li id="account" class="active" @click="per()"><strong>Personal</strong></li>
-                <li id="personal" class="active" @click="pro()"><strong>Profile</strong></li>
-                <li id="payment" class="active" @click="exp()"><strong>Expertise</strong></li>
-                <li id="confirm" @click="int()"><strong>Interview</strong></li>
+                <li id="account" class="active" ><strong>Personal</strong></li>
+                <li id="personal" class="active" ><strong>Profile</strong></li>
+                <li id="payment" class="active" ><strong>Expertise</strong></li>
+                <li id="confirm" ><strong>Interview</strong></li>
               </ul>
               <div class="progress">
                 <div
@@ -30,7 +30,7 @@
         <p @click="activeTab='engineering'">Engineering</p>
       </div>
       <div class="options">
-        <computersoftware v-if="activeTab === 'computersoftware'"/>
+        <computersoftware v-if="activeTab === 'computersoftware'" :source="checkedbox" @save="save"/>
         <computerscience v-if="activeTab === 'computerscience'"/>
         <engineering v-if="activeTab === 'engineering'"/>
       </div>
@@ -69,23 +69,44 @@ export default {
     computerscience
   },
   methods: {
-    per () {
-      this.$router.push('/personal')
+    save (obj) {
+      if (obj.number === 1) {
+        const array = []
+        this.checkedbox.push(...obj.check)
+        array.push(...this.checkedbox)
+        localStorage.setItem('checkone', JSON.stringify(array))
+      }
     },
-    pro () {
-      this.$router.push('/profile')
+    created () {
+      this.taxvalue = localStorage.getItem('taxvalue')
     },
-    exp () {
-      this.$router.push('/expertise')
-    },
-    int () {
-      this.$router.push('/interview')
-    },
+    // per () {
+    //   this.$router.push('/personal')
+    // },
+    // pro () {
+    //   this.$router.push('/profile')
+    // },
+    // exp () {
+    //   this.$router.push('/expertise')
+    // },
+    // int () {
+    //   this.$router.push('/interview')
+    // },
     next () {
       this.$router.push('/interview')
     },
     previous () {
-      this.$router.push('/profile')
+      let i = this.$route.params.i
+      console.log('i', i)
+      for (let t = 0; t <= i; t++) {
+        console.log(t)
+        localStorage.getItem('work' + t)
+        localStorage.getItem('active From' + t)
+        localStorage.getItem('active To' + t)
+      }
+      let j = this.$route.params.j
+      console.log('j', j)
+      this.$router.push('/profile/' + i + '/' + j)
     },
     componeclicked () {
       this.$emit('componeclicked', this.item)
@@ -97,12 +118,19 @@ export default {
 .box {
   display: flex;
   justify-content: center;
+  margin-left:100px;
 }
 .list {
+    display: flex;
+    flex-direction: column;
+    justify-content: wrap;
   padding-right: 100px;
+  align-items: right;
 }
 .options{
     border: 1px solid black;
+    width: 60%;
+    /* margin:5 5 5 5; */
 }
 p {
   border: 1px solid black;
@@ -112,14 +140,14 @@ p {
     width: 20em;
     overflow: auto;
 } */
-.checkboxgroup p{
+/* .checkboxgroup p{
     width: 7em;
     text-align: right;
 }
 .checkboxgroup label{
     width: 12em;
     float: right;
-}
+} */
 #progressbar {
   margin-bottom: 30px;
   overflow: hidden;
@@ -197,7 +225,7 @@ p {
 }
 .buttons{
   display:flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items:center ;
 }
 .button{

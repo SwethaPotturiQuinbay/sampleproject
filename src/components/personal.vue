@@ -5,12 +5,15 @@
         <h2 id="heading">Sample Project</h2>
         <form id="msform">
           <ul id="progressbar">
-            <li id="account" class="active" @click="per()">
+            <li id="account" class="active" >
               <strong>Personal</strong>
             </li>
-            <li id="personal" @click="pro()"><strong>Profile</strong></li>
+            <!-- <li id="personal" @click="pro()"><strong>Profile</strong></li>
             <li id="payment" @click="exp()"><strong>Expertise</strong></li>
-            <li id="confirm" @click="int()"><strong>Interview</strong></li>
+            <li id="confirm" @click="int()"><strong>Interview</strong></li> -->
+             <li id="personal" ><strong>Profile</strong></li>
+            <li id="payment" ><strong>Expertise</strong></li>
+            <li id="confirm" ><strong>Interview</strong></li>
           </ul>
           <div class="progress">
             <div
@@ -63,8 +66,8 @@
           <div class="way" >
             <label> what are you?</label>
             <p>*</p>
-            <input type="radio" name="radio" required/>University Student
-            <input type="radio" name="radio" required/>Professional
+            <input type="radio" name="radio" value="University Student" v-model="radiooption" required/>University Student
+            <input type="radio" name="radio" value="Professional" v-model="radiooption" required/>Professional
           </div>
           <div class="sides">
             <label class="fieldlabels">University: </label>
@@ -99,9 +102,11 @@
           <div class="side">
             <label class="fieldlabels">Do you have a tax ID ? </label>
             <p>*</p>
-            <input type="radio" name="rad" />I have a tax id<input
+            <input type="radio" name="rad" v-model="taxvalue" value="I have a tax ID" />I have a tax id<input
               type="radio"
               name="rad"
+              v-model="taxvalue"
+              value="I don't have a tax ID"
             />I don't have a tax id
           </div>
           <div>
@@ -115,7 +120,7 @@
 <script>
 import swal from 'sweetalert'
 import {mapGetters} from 'vuex'
-import progressbar from '@/components/progressbar'
+// import progressbar from '@/components/progressbar'
 const emailRe =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 export default {
@@ -128,7 +133,8 @@ export default {
       major: null,
       graduationDate: '',
       value: '',
-      radiovalue: ''
+      radiooption: null,
+      taxvalue: null
     }
   },
   // components: {
@@ -140,9 +146,15 @@ export default {
     this.value = localStorage.getItem('value')
     this.university = localStorage.getItem('university')
     this.major = localStorage.getItem('major')
-    this.radiovalue = localStorage.getItem('radio')
     this.graduationDate = localStorage.getItem('graduationDate')
+    this.radiooption = localStorage.getItem('univerradio')
+    this.taxvalue = localStorage.getItem('taxid')
+    console.log('radio value' + this.radiooption)
   },
+  // mounted () {
+  //   this.radiooption = localStorage.getItem('radiooption')
+  //   this.taxvalue = localStorage.getItem('taxvalue')
+  // },
   methods: {
     isEmailValid () {
       if (emailRe.test(this.email)) {
@@ -192,24 +204,26 @@ export default {
       localStorage.setItem('value', this.value)
       localStorage.setItem('university', this.university)
       localStorage.setItem('major', this.major)
-      localStorage.setItem('radio', this.radiovalue)
+      // localStorage.setItem('radio', this.radiovalue)
       localStorage.setItem('graduationDate', this.graduationDate)
+      localStorage.setItem('univerradio', this.radiooption)
+      localStorage.setItem('taxid', this.taxvalue)
       this.$store.dispatch('setData', this.name)
-      
-      this.$router.push('/profile')
-    },
-    per () {
-      this.$router.push('/personal')
-    },
-    pro () {
-      this.$router.push('/profile')
-    },
-    exp () {
-      this.$router.push('/expertise')
-    },
-    int () {
-      this.$router.push('/interview')
+
+      this.$router.push('/profile/' + 0 + '/' + 0)
     }
+    // per () {
+    //   this.$router.push('/personal')
+    // },
+    // pro () {
+    //   this.$router.push('/profile')
+    // },
+    // exp () {
+    //   this.$router.push('/expertise')
+    // },
+    // int () {
+    //   this.$router.push('/interview')
+    // }
   }
 }
 </script>

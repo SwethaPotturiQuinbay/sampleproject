@@ -5,14 +5,14 @@
         <h2 id="heading">Sample Project</h2>
         <form id="msform">
           <ul id="progressbar">
-            <li id="account" class="active">
+            <li id="account" class="active" @click="per()">
               <strong>Personal</strong>
             </li>
-            <li id="personal" class="active">
+            <li id="personal" class="active" @click="pro()">
               <strong>Profile</strong>
             </li>
-            <li id="payment" ><strong>Expertise</strong></li>
-            <li id="confirm" ><strong>Interview</strong></li>
+            <li id="payment" @click="exp()"><strong>Expertise</strong></li>
+            <li id="confirm" @click="int()"><strong>Interview</strong></li>
           </ul>
           <div class="progress">
             <div
@@ -158,68 +158,44 @@ export default {
       enrolled: null,
       graduated: null,
       addwork: [{ work: '', activeFrom: '', activeTo: '' }],
-      addeducation: [{ ed: '' }],
+      addeducation: [{ ed: '', enrolled: '', graduated: '' }],
       addanotherjob: false,
       addanotherschool: false,
-      work: null,
-      i: 0,
-      j: 0,
-      h: []
+      work: null
     }
   },
   // components: {
   //   progressbar
   // },
-  created () {
-    this.aboutYou = localStorage.getItem('aboutYou')
-    this.teachingExperience = localStorage.getItem('teachingExperience')
-    // this.addwork.work = localStorage.getItem('work')
-    // this.addwork = localStorage.getItem('activeFrom')
-    // this.addwork.activeTo = localStorage.getItem('activeTo')
-    // console.log('addwork', localStorage.getItem('addwork[0]'))
-    // this.addwork = localStorage.getItem('addwork1')
-    // this.addeducation.education = localStorage.getItem('education')
-    // this.addeducation.enrolled = localStorage.getItem('enrolled')
-    // this.addeducation.graduated = localStorage.getItem('graduated')
-    console.log('hgusgdjmhskzd,m' + this.i)
-    let n = this.$route.params.j
-    console.log('nhello' + n)
-    for (let t = 0; t <= n; t++) {
-      console.log('education' + t, localStorage.getItem('education' + t))
-      this.addeducation[t].education = localStorage.getItem('education' + t)
-      this.addeducation[t].enrolled = localStorage.getItem('enrolled' + t)
-      this.addeducation[t].graduated = localStorage.getItem('graduated' + t)
-      console.log('hiii' + this.addeducation[1].graduated)
-    }
-  },
-  mounted () {
-    let m = this.$route.params.i
-    console.log('m' + m)
-    for (let l = 0; l <= m; l++) {
-      console.log('work' + l, localStorage.getItem('work' + l))
-      this.addwork[l].work = localStorage.getItem('work' + l)
-      this.addwork[l].activeFrom = localStorage.getItem('active From' + l)
-      this.addwork[l].activeTo = localStorage.getItem('active To' + l)
-      console.log('hiii' + this.addwork[1].activeTo)
-    }
-  },
+  // created () {
+  //   this.aboutYou = localStorage.getItem('aboutYou')
+  //   this.teachingExperience = localStorage.getItem('teachingExperience')
+  //   this.addwork.work = localStorage.getItem('work')
+  //   this.addwork.activeFrom = localStorage.getItem('activeFrom')
+  //   this.addwork.activeTo = localStorage.getItem('activeTo')
+  //   this.addeducation.education = localStorage.getItem('education')
+  //   this.addeducation.enrolled = localStorage.getItem('enrolled')
+  //   this.addeducation.graduated = localStorage.getItem('graduated')
+  // },
   methods: {
-    // per () {
-    //   this.$router.push('/personal')
-    // },
-    // pro () {
-    //   this.$router.push('/profile')
-    // },
-    // exp () {
-    //   this.$router.push('/expertise')
-    // },
-    // int () {
-    //   this.$router.push('/interview')
-    // },
+    per () {
+      this.$router.push('/personal')
+    },
+    pro () {
+      this.$router.push('/profile')
+    },
+    exp () {
+      this.$router.push('/expertise')
+    },
+    int () {
+      this.$router.push('/interview')
+    },
     async next () {
-      console.log(this.addwork[0].activeFrom)
-      if (
-        this.aboutYou === null ||
+      for (let i = 0; i < this.addwork.length; i++) {
+        
+      }
+        if (
+          this.aboutYou === null ||
         this.teachingExperience === null ||
         // this.work === null ||
         // this.activeFrom === null ||
@@ -233,54 +209,36 @@ export default {
         this.addeducation.education === '' ||
         this.addeducation.enrolled === null ||
         this.addeducation.graduated === null
-      ) {
+        ) {
+          swal({
+            text: 'Please fill all the details',
+            icon: 'warning'
+          })
+          return
+        }
+      }
+      if (this.addwork.activeTo < this.addwork.activeFrom) {
+        console.log('Hi')
         swal({
-          text: 'Please fill all the details',
-          icon: 'warning'
+          text: 'Active To date should not be less than Active from date'
         })
         return
       }
-      for (let t = 0; t <= this.i; t++) {
-        if (this.addwork[t].activeTo < this.addwork[t].activeFrom) {
-          console.log('Hi')
-          swal({
-            text: 'Active To date should not be less than Active from date'
-          })
-          return
-        }
+      if (this.addeducation.graduated < this.addeducation.enrolled) {
+        swal({
+          text: 'The graduated date must not be earlier than the enrolled date.'
+        })
+        return
       }
-      for (let t = 0; t <= this.j; t++) {
-        if (this.addeducation[t].graduated < this.addeducation[t].enrolled) {
-          console.log('Hi')
-          swal({
-            text: 'The graduated date must not be earlier than the enrolled date.'
-          })
-          return
-        }
-      }
-      // if (this.addeducation[this.j].graduated < this.addeducation[this.j].enrolled) {
-      //   swal({
-      //     text: 'The graduated date must not be earlier than the enrolled date.'
-      //   })
-      //   return
-      // }
-      // console.log('bfdjhsbjhfbsj', this.aboutYou, this.teachingExperience, this.addwork.workHistory)
       localStorage.setItem('aboutYou', this.aboutYou)
       localStorage.setItem('teachingExperience', this.teachingExperience)
-      // localStorage.setItem('workHistory', this.addwork[this.i].work)
-      // localStorage.setItem('addwork1', this.addwork[0])
-      for (let t = 0; t <= this.i; t++) {
-        localStorage.setItem('work' + t, this.addwork[t].work)
-        localStorage.setItem('active From' + t, this.addwork[t].activeFrom)
-        localStorage.setItem('active To' + t, this.addwork[t].activeTo)
-      }
-      // localStorage.setItem('activeTo', this.addwork.activeTo)
-      for (let t = 0; t <= this.j; t++) {
-        localStorage.setItem('education' + t, this.addeducation[t].education)
-        localStorage.setItem('enrolled' + t, this.addeducation[t].enrolled)
-        localStorage.setItem('graduated' + t, this.addeducation[t].graduated)
-      }
-      this.$router.push('/expertise/' + this.i + '/' + this.j)
+      localStorage.setItem('workHistory', this.addwork.workHistory)
+      localStorage.setItem('activeFrom', this.addwork.activeFrom)
+      localStorage.setItem('activeTo', this.addwork.activeTo)
+      localStorage.setItem('education', this.addeducation.education)
+      localStorage.setItem('enrolled', this.addeducation.enrolled)
+      localStorage.setItem('graduated', this.addeducation.graduated)
+      this.$router.push('/expertise')
     },
     previous () {
       this.$router.push('/personal')
@@ -297,7 +255,6 @@ export default {
         obj['activeTo'] = ''
         fieldType.push(obj)
         console.log(fieldType)
-        this.i = this.i + 1
       }
     },
     addFields (fieldType) {
@@ -312,7 +269,6 @@ export default {
         obj['graduated'] = ''
         fieldType.push(obj)
         console.log(fieldType)
-        this.j = this.j + 1
       }
     }
   }
