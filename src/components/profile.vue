@@ -5,14 +5,14 @@
         <h2 id="heading">Sample Project</h2>
         <form id="msform">
           <ul id="progressbar">
-            <li id="account" class="active">
+            <li id="personal" class="active">
               <strong>Personal</strong>
             </li>
-            <li id="personal" class="active">
+            <li id="profile" class="active">
               <strong>Profile</strong>
             </li>
-            <li id="payment" ><strong>Expertise</strong></li>
-            <li id="confirm" ><strong>Interview</strong></li>
+            <li id="expertise" ><strong>Expertise</strong></li>
+            <li id="interview" ><strong>Interview</strong></li>
           </ul>
           <div class="progress">
             <div
@@ -47,15 +47,13 @@
         />
       </div>
         <h5 class="fieldlabels">Work History</h5>
-
-        <!-- <div v-for="(input, index) in addwork" :key="`phoneInput-${index}`"> -->
-        <div v-for="(input, index) in addwork" :key="`${index}`">
+        <div v-for="(workobj, indx) in addwork" :key="indx+'work'">
           <div class="cn">
         <label class="fieldlabels">Company Name:</label>
         <p>*</p>
           <input
             type="text"
-            v-model="addwork[index].work"
+            v-model="workobj.work"
             name="workHistory"
             placeholder="Company"
           />
@@ -65,7 +63,7 @@
           <p>*</p>
           <input
             type="date"
-            v-model="addwork[index].activeFrom"
+            v-model="workobj.activeFrom"
             name="activeFrom"
             placeholder="Active From"
           />
@@ -75,7 +73,7 @@
           <p>*</p>
           <input
             type="date"
-            v-model="addwork[index].activeTo"
+            v-model="workobj.activeTo"
             name="activeTo"
             placeholder="Active To"
           />
@@ -88,14 +86,9 @@
         >
       </div>
         <h5 class="fieldlabels">Education</h5>
-
-        <!-- <div
-          v-for="(input, index) in addeducation"
-          :key="`phoneInput-${index}`"
-        > -->
         <div
           v-for="(input, index) in addeducation"
-          :key="`${index}`"
+          :key="`${index}-edu`"
         >
         <div class="school">
           <label class="fieldlabels">School Name:</label>
@@ -145,7 +138,6 @@
   </div>
 </template>
 <script>
-// import progressbar from '@/components/progressbar'
 import swal from 'sweetalert'
 export default {
   data () {
@@ -158,75 +150,73 @@ export default {
       enrolled: null,
       graduated: null,
       addwork: [{ work: '', activeFrom: '', activeTo: '' }],
-      addeducation: [{ ed: '' }],
+      addworkone:[],
+      addeducation: [{education: '',graduated:'',enrolled:'' }],
+      addeducationone:[],
       addanotherjob: false,
       addanotherschool: false,
       work: null,
-      i: 0,
-      j: 0,
       h: []
     }
   },
-  // components: {
-  //   progressbar
-  // },
   created () {
     this.aboutYou = localStorage.getItem('aboutYou')
     this.teachingExperience = localStorage.getItem('teachingExperience')
-    // this.addwork.work = localStorage.getItem('work')
-    // this.addwork = localStorage.getItem('activeFrom')
-    // this.addwork.activeTo = localStorage.getItem('activeTo')
-    // console.log('addwork', localStorage.getItem('addwork[0]'))
-    // this.addwork = localStorage.getItem('addwork1')
-    // this.addeducation.education = localStorage.getItem('education')
-    // this.addeducation.enrolled = localStorage.getItem('enrolled')
-    // this.addeducation.graduated = localStorage.getItem('graduated')
-    console.log('hgusgdjmhskzd,m' + this.i)
-    let n = this.$route.params.j
-    console.log('nhello' + n)
-    for (let t = 0; t <= n; t++) {
-      console.log('education' + t, localStorage.getItem('education' + t))
-      this.addeducation[t].education = localStorage.getItem('education' + t)
-      this.addeducation[t].enrolled = localStorage.getItem('enrolled' + t)
-      this.addeducation[t].graduated = localStorage.getItem('graduated' + t)
-      console.log('hiii' + this.addeducation[1].graduated)
-    }
+    console.log(localStorage.getItem('addWork'))
+    console.log(localStorage.getItem('addEducation'))
+    let hello = localStorage.getItem('addWork')
+  //  this.addworkone = JSON.parse(localStorage.getItem('addWork'))
+  if(localStorage.getItem('addWork')!==null){
+   this.addwork = JSON.parse(localStorage.getItem('addWork'))
+  }
+  if(localStorage.getItem('addEducation')!==null){
+   this.addeducation = JSON.parse(localStorage.getItem('addEducation'))
+  }
+  //  this.addeducationone = JSON.parse(localStorage.getItem('addEducation'))
+
+   console.log('trying to console addworkone')
+   console.log('addworkone',this.addworkone)
+  //  console.log("gdgfddgdghfgfgh",localStorage.get('addworkone'))
+  //  console.log('i', n)
+  //  console.log(this.addworkone[1], 'rghdhuakjHSzrdjksbxghjvbdfxcgbvjdnfxbgcjndfbxcgjbvfngcbvfbcgm')
+    // for (let l = 0; l <this.addwork.length; l++) {
+    //   this.addwork[l].activeFrom = this.addworkone[l].activeFrom
+    //   this.addwork[l].activeTo = this.addworkone[l].activeTo
+    //   this.addwork[l].work = this.addworkone[l].work
+    //   console.log(this.addwork[l], 'hammayya')
+    // }
+  //   let s = this.$route.params.i
+  //  console.log('i', s)
+  //   for (let l = 0; l <= s+1; l++) {
+  //     this.addeducation[l].graduated = this.addeducationone[l].graduated
+  //     this.addeducation[l].enrolled = this.addeducationone[l].enrolled
+  //     this.addeducation[l].education = this.addeducationone[l].education
+  //     console.log(this.addeducation[l], 'hello')
+  //   }
   },
-  mounted () {
-    let m = this.$route.params.i
-    console.log('m' + m)
-    for (let l = 0; l <= m; l++) {
-      console.log('work' + l, localStorage.getItem('work' + l))
-      this.addwork[l].work = localStorage.getItem('work' + l)
-      this.addwork[l].activeFrom = localStorage.getItem('active From' + l)
-      this.addwork[l].activeTo = localStorage.getItem('active To' + l)
-      console.log('hiii' + this.addwork[1].activeTo)
-    }
-  },
+  //   for (let t = 0; t <= n; t++) {
+  //     console.log('education' + t, localStorage.getItem('education' + t))
+  //     this.addeducation[t].education = localStorage.getItem('education' + t)
+  //     this.addeducation[t].enrolled = localStorage.getItem('enrolled' + t)
+  //     this.addeducation[t].graduated = localStorage.getItem('graduated' + t)
+  //   }
+  // },
+  // mounted () {
+  //   let m = this.$route.params.i
+  //   console.log('m' + m)
+  //   for (let l = 0; l <= m; l++) {
+  //     console.log('work' + l, localStorage.getItem('work' + l))
+  //     this.addwork[l].work = localStorage.getItem('work' + l)
+  //     this.addwork[l].activeFrom = localStorage.getItem('active From' + l)
+  //     this.addwork[l].activeTo = localStorage.getItem('active To' + l)
+  //   }
+  // },
   methods: {
-    // per () {
-    //   this.$router.push('/personal')
-    // },
-    // pro () {
-    //   this.$router.push('/profile')
-    // },
-    // exp () {
-    //   this.$router.push('/expertise')
-    // },
-    // int () {
-    //   this.$router.push('/interview')
-    // },
     async next () {
       console.log(this.addwork[0].activeFrom)
       if (
         this.aboutYou === null ||
         this.teachingExperience === null ||
-        // this.work === null ||
-        // this.activeFrom === null ||
-        // this.activeTo === null ||
-        // this.education === null ||
-        // this.enrolled === null ||
-        // this.graduated === null
         this.addwork.work === '' ||
         this.addwork.activeFrom === null ||
         this.addwork.activeTo === null ||
@@ -240,8 +230,8 @@ export default {
         })
         return
       }
-      for (let t = 0; t <= this.i; t++) {
-        if (this.addwork[t].activeTo < this.addwork[t].activeFrom) {
+      for (let i=0;i<this.addwork.length;i++) {
+        if (this.addwork[i].activeTo < this.addwork[i].activeFrom) {
           console.log('Hi')
           swal({
             text: 'Active To date should not be less than Active from date'
@@ -249,8 +239,8 @@ export default {
           return
         }
       }
-      for (let t = 0; t <= this.j; t++) {
-        if (this.addeducation[t].graduated < this.addeducation[t].enrolled) {
+      for (let i = 0; i < this.addeducation.length; i++) {
+        if (this.addeducation[i].graduated < this.addeducation[i].enrolled) {
           console.log('Hi')
           swal({
             text: 'The graduated date must not be earlier than the enrolled date.'
@@ -258,36 +248,28 @@ export default {
           return
         }
       }
-      // if (this.addeducation[this.j].graduated < this.addeducation[this.j].enrolled) {
-      //   swal({
-      //     text: 'The graduated date must not be earlier than the enrolled date.'
-      //   })
-      //   return
-      // }
-      // console.log('bfdjhsbjhfbsj', this.aboutYou, this.teachingExperience, this.addwork.workHistory)
       localStorage.setItem('aboutYou', this.aboutYou)
       localStorage.setItem('teachingExperience', this.teachingExperience)
-      // localStorage.setItem('workHistory', this.addwork[this.i].work)
-      // localStorage.setItem('addwork1', this.addwork[0])
-      for (let t = 0; t <= this.i; t++) {
-        localStorage.setItem('work' + t, this.addwork[t].work)
-        localStorage.setItem('active From' + t, this.addwork[t].activeFrom)
-        localStorage.setItem('active To' + t, this.addwork[t].activeTo)
-      }
-      // localStorage.setItem('activeTo', this.addwork.activeTo)
-      for (let t = 0; t <= this.j; t++) {
-        localStorage.setItem('education' + t, this.addeducation[t].education)
-        localStorage.setItem('enrolled' + t, this.addeducation[t].enrolled)
-        localStorage.setItem('graduated' + t, this.addeducation[t].graduated)
-      }
+      localStorage.setItem('addWork', JSON.stringify(this.addwork))
+      localStorage.setItem('addEducation', JSON.stringify(this.addeducation))
+      // for (let t = 0; t <= this.i; t++) {
+      //   localStorage.setItem('work' + t, this.addwork[t].work)
+      //   localStorage.setItem('active From' + t, this.addwork[t].activeFrom)
+      //   localStorage.setItem('active To' + t, this.addwork[t].activeTo)
+      // }
+      // for (let t = 0; t <= this.j; t++) {
+      //   localStorage.setItem('education' + t, this.addeducation[t].education)
+      //   localStorage.setItem('enrolled' + t, this.addeducation[t].enrolled)
+      //   localStorage.setItem('graduated' + t, this.addeducation[t].graduated)
+      // }
       this.$router.push('/expertise/' + this.i + '/' + this.j)
     },
     previous () {
       this.$router.push('/personal')
     },
-    addField (fieldType) {
-      const index = fieldType.length - 1
-      if (!fieldType[index].work || !fieldType[index].activeFrom || !fieldType[index].activeTo) {
+    addField () {
+      const index = this.addwork.length - 1
+      if (!this.addwork[index].work || !this.addwork[index].activeFrom || !this.addwork[index].activeTo) {
         this.addanotherjob = false
       } else {
         this.addanotherjob = true
@@ -295,14 +277,14 @@ export default {
         obj['work'] = ''
         obj['activeFrom'] = ''
         obj['activeTo'] = ''
-        fieldType.push(obj)
-        console.log(fieldType)
-        this.i = this.i + 1
+        this.addwork.push(obj)
+        console.log(this.addwork)
+        // this.i = this.i + 1
       }
     },
-    addFields (fieldType) {
-      const index = fieldType.length - 1
-      if (!fieldType[index].education || !fieldType[index].enrolled || !fieldType[index].graduated) {
+    addFields () {
+      const index = this.addeducation.length - 1
+      if (!this.addeducation[index].education || !this.addeducation[index].enrolled || !this.addeducation[index].graduated) {
         this.addanotherschool = false
       } else {
         this.addanotherschool = true
@@ -310,9 +292,9 @@ export default {
         obj['education'] = ''
         obj['enrolled'] = ''
         obj['graduated'] = ''
-        fieldType.push(obj)
-        console.log(fieldType)
-        this.j = this.j + 1
+        this.addeducation.push(obj)
+        console.log(this.addeducation)
+        // this.j = this.j + 1
       }
     }
   }
@@ -448,7 +430,7 @@ export default {
   align-items: center;
 }
 
-#progressbar {
+/* #progressbar {
   margin-bottom: 30px;
   overflow: hidden;
   color: lightgrey;
@@ -522,10 +504,87 @@ export default {
 
 .progress-bar {
   background-color: #673ab7;
+} */
+#progressbar {
+  margin-bottom: 30px;
+  overflow: hidden;
+  color: lightgrey;
+}
+
+#progressbar .active {
+  color: #673ab7;
+}
+
+#progressbar li {
+  list-style-type: none;
+  font-size: 15px;
+  width: 25%;
+  float: left;
+  position: relative;
+  font-weight: 400;
+}
+
+#progressbar #personal:before {
+  font-family: FontAwesome;
+  content: "✓";
+}
+
+#progressbar #profile:before {
+  font-family: FontAwesome;
+  content: "✓";
+}
+
+#progressbar #expertise:before {
+  font-family: FontAwesome;
+  content: "✓";
+}
+
+#progressbar #interview:before {
+  font-family: FontAwesome;
+  content: "✓";
+}
+
+#progressbar li:before {
+  width: 50px;
+  height: 50px;
+  line-height: 45px;
+  display: block;
+  font-size: 20px;
+  color: #ffffff;
+  background: lightgray;
+  border-radius: 50%;
+  margin: 0 auto 10px auto;
+  padding: 2px;
+}
+
+#progressbar li:after {
+  content: "";
+  width: 100%;
+  height: 2px;
+  background: lightgray;
+  position: absolute;
+  left: 0;
+  top: 25px;
+  z-index: -1;
+}
+
+#progressbar li.active:before,
+#progressbar li.active:after {
+  background: #673ab7;
+}
+
+.progress {
+  height: 20px;
+}
+
+.progress-bar {
+  background-color: #673ab7;
 }
 #heading {
   text-transform: uppercase;
   color: #673ab7;
   font-weight: normal;
 }
+
+
 </style>

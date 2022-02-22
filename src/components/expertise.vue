@@ -5,10 +5,10 @@
             <h2 id="heading">Sample Project</h2>
             <form id="msform">
               <ul id="progressbar">
-                <li id="account" class="active" ><strong>Personal</strong></li>
-                <li id="personal" class="active" ><strong>Profile</strong></li>
-                <li id="payment" class="active" ><strong>Expertise</strong></li>
-                <li id="confirm" ><strong>Interview</strong></li>
+                <li id="personal" class="active" ><strong>Personal</strong></li>
+                <li id="profile" class="active" ><strong>Profile</strong></li>
+                <li id="expertise" class="active" ><strong>Expertise</strong></li>
+                <li id="interview" ><strong>Interview</strong></li>
               </ul>
               <div class="progress">
                 <div
@@ -35,12 +35,6 @@
         <engineering v-if="activeTab === 'engineering'"/>
       </div>
     </div>
-     <!-- <div>
-                    <button @click="next()">Next</button>
-                </div>
-  <div>
-                    <button @click="previous()">Previous</button>
-                </div> -->
                 <div class="buttons">
   <div>
                     <button class="button" @click="previous()">Previous</button>
@@ -80,18 +74,6 @@ export default {
     created () {
       this.taxvalue = localStorage.getItem('taxvalue')
     },
-    // per () {
-    //   this.$router.push('/personal')
-    // },
-    // pro () {
-    //   this.$router.push('/profile')
-    // },
-    // exp () {
-    //   this.$router.push('/expertise')
-    // },
-    // int () {
-    //   this.$router.push('/interview')
-    // },
     next () {
       this.$router.push('/interview')
     },
@@ -130,24 +112,11 @@ export default {
 .options{
     border: 1px solid black;
     width: 60%;
-    /* margin:5 5 5 5; */
 }
 p {
   border: 1px solid black;
   background-color: whitesmoke;
 }
-/* .checkboxgroup{
-    width: 20em;
-    overflow: auto;
-} */
-/* .checkboxgroup p{
-    width: 7em;
-    text-align: right;
-}
-.checkboxgroup label{
-    width: 12em;
-    float: right;
-} */
 #progressbar {
   margin-bottom: 30px;
   overflow: hidden;
@@ -167,24 +136,24 @@ p {
   font-weight: 400;
 }
 
-#progressbar #account:before {
-  font-family: FontAwesome;
-  content: "\f13e";
-}
-
 #progressbar #personal:before {
   font-family: FontAwesome;
-  content: "\f007";
+  content: "✓";
 }
 
-#progressbar #payment:before {
+#progressbar #profile:before {
   font-family: FontAwesome;
-  content: "\f030";
+  content: "✓";
 }
 
-#progressbar #confirm:before {
+#progressbar #expertise:before {
   font-family: FontAwesome;
-  content: "\f00c";
+  content: "✓";
+}
+
+#progressbar #interview:before {
+  font-family: FontAwesome;
+  content: "✓";
 }
 
 #progressbar li:before {

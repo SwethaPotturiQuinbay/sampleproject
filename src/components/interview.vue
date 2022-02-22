@@ -5,10 +5,10 @@
             <h2 id="heading">Sample Project</h2>
             <form id="msform">
               <ul id="progressbar">
-                <li id="account" class="active" ><strong>Personal</strong></li>
-                <li id="personal" class="active" ><strong>Profile</strong></li>
-                <li id="payment" class="active" ><strong>Expertise</strong></li>
-                <li id="confirm" class="active" ><strong>Interview</strong></li>
+                <li id="personal" class="active" ><strong>Personal</strong></li>
+                <li id="profile" class="active" ><strong>Profile</strong></li>
+                <li id="expertise" class="active" ><strong>Expertise</strong></li>
+                <li id="interview" class="active" ><strong>Interview</strong></li>
               </ul>
               <div class="progress">
                 <div
@@ -36,19 +36,13 @@
         <q2 v-if="activeTab === 'q2'"/>
         <q3 v-if="activeTab === 'q3'"/>
         <q4 v-if="activeTab === 'q4'"/>
-
-      <!-- <h2 class="fs-title">Question 1</h2>
-    <h3 class="fs-subtitle">What do you consider your main strengths to be?</h3>
-    <p class="help-block">List your strengths here.</p>
-    <textarea class="form-control" name="CAT_Custom_1" id="CAT_Custom_1" rows="4" onkeydown="if(this.value.length>=4000)this.value=this.value.substring(0,3999);"></textarea>
-    <input type="button" name="next" class="next action-button" value="Next" /> -->
     </div>
   </div>
   <div class="buttons">
    <div>
                     <button class="button" @click="previous()">Previous</button>
                 </div>
-  <div><button class="button" >Submit</button></div>
+  <div><button class="button" @click="submit()" >Submit</button></div>
   </div>
   </div>
 </template>
@@ -72,20 +66,11 @@ export default{
     q4
   },
   methods: {
-    // per () {
-    //   this.$router.push('/personal')
-    // },
-    // pro () {
-    //   this.$router.push('/profile')
-    // },
-    // exp () {
-    //   this.$router.push('/expertise')
-    // },
-    // int () {
-    //   this.$router.push('/interview')
-    // },
     previous () {
       this.$router.push('/expertise/0/0')
+    },
+    submit(){
+      this.$router.push('/submit')
     }
   }
 }
@@ -118,24 +103,24 @@ export default{
   font-weight: 400;
 }
 
-#progressbar #account:before {
-  font-family: FontAwesome;
-  content: "\f13e";
-}
-
 #progressbar #personal:before {
   font-family: FontAwesome;
-  content: "\f007";
+  content: "✓";
 }
 
-#progressbar #payment:before {
+#progressbar #profile:before {
   font-family: FontAwesome;
-  content: "\f030";
+  content: "✓";
 }
 
-#progressbar #confirm:before {
+#progressbar #expertise:before {
   font-family: FontAwesome;
-  content: "\f00c";
+  content: "✓";
+}
+
+#progressbar #interview:before {
+  font-family: FontAwesome;
+  content: "✓";
 }
 
 #progressbar li:before {

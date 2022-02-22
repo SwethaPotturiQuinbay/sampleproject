@@ -3,9 +3,7 @@
     <div class="question">
       <h2 class="fs-title">Question 1</h2>
     <h3 class="fs-subtitle">What do you consider your main strengths to be?</h3>
-    <!--<p class="help-block">List your strengths here.</p>-->
-    <textarea class="form-control" name="CAT_Custom_1" v-model="q1" id="CAT_Custom_1" rows="4" onkeydown="if(this.value.length>=4000)this.value=this.value.substring(0,3999);"></textarea>
-    <!-- <input type="button" name="next" class="next action-button" value="Next" /> -->
+    <textarea class="form-control" name="CAT_Custom_1" v-model="q1" id="CAT_Custom_1" rows="4" cols="80" onkeydown="if(this.value.length>=4000)this.value=this.value.substring(0,3999);"></textarea>
     <div>
     <button id="btnn" @click="submit()">Submit Question 1</button></div>
     </div>
@@ -57,5 +55,8 @@ export default{
   width: 100px;
   /* margin-bottom: 5px; */
   align-items: center;
+}
+.question .form-control input[type="textarea"]{
+  width:100px
 }
 </style>

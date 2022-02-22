@@ -5,15 +5,12 @@
         <h2 id="heading">Sample Project</h2>
         <form id="msform">
           <ul id="progressbar">
-            <li id="account" class="active" >
+            <li id="personal" class="active" >
               <strong>Personal</strong>
             </li>
-            <!-- <li id="personal" @click="pro()"><strong>Profile</strong></li>
-            <li id="payment" @click="exp()"><strong>Expertise</strong></li>
-            <li id="confirm" @click="int()"><strong>Interview</strong></li> -->
-             <li id="personal" ><strong>Profile</strong></li>
-            <li id="payment" ><strong>Expertise</strong></li>
-            <li id="confirm" ><strong>Interview</strong></li>
+             <li id="profile" ><strong>Profile</strong></li>
+            <li id="expertise" ><strong>Expertise</strong></li>
+            <li id="interview" ><strong>Interview</strong></li>
           </ul>
           <div class="progress">
             <div
@@ -117,10 +114,9 @@
     </div>
   </div>
 </template>
+
 <script>
 import swal from 'sweetalert'
-import {mapGetters} from 'vuex'
-// import progressbar from '@/components/progressbar'
 const emailRe =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 export default {
@@ -134,12 +130,10 @@ export default {
       graduationDate: '',
       value: '',
       radiooption: null,
-      taxvalue: null
+      taxvalue: null,
+      wrongEmail: ''
     }
   },
-  // components: {
-  //   progressbar
-  // },
   created () {
     this.name = localStorage.getItem('name')
     this.email = localStorage.getItem('email')
@@ -151,10 +145,6 @@ export default {
     this.taxvalue = localStorage.getItem('taxid')
     console.log('radio value' + this.radiooption)
   },
-  // mounted () {
-  //   this.radiooption = localStorage.getItem('radiooption')
-  //   this.taxvalue = localStorage.getItem('taxvalue')
-  // },
   methods: {
     isEmailValid () {
       if (emailRe.test(this.email)) {
@@ -162,14 +152,6 @@ export default {
       } else {
         this.wrongEmail = true
       }
-    },
-    watch: {
-      'name' () {
-        this.name = name
-      }
-    },
-    computed: {
-      ...mapGetters('name')
     },
     acceptNumber () {
       var x = this.value
@@ -180,11 +162,6 @@ export default {
         : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '')
     },
     async next () {
-      // console.log('name', this.name)
-      // console.log('email', this.email)
-      // console.log('mobile', this.value)
-      // console.log('university', this.university)
-      // console.log('major', this.major)
       if (
         this.name === null ||
         this.email === null ||
@@ -204,26 +181,12 @@ export default {
       localStorage.setItem('value', this.value)
       localStorage.setItem('university', this.university)
       localStorage.setItem('major', this.major)
-      // localStorage.setItem('radio', this.radiovalue)
       localStorage.setItem('graduationDate', this.graduationDate)
       localStorage.setItem('univerradio', this.radiooption)
       localStorage.setItem('taxid', this.taxvalue)
-      this.$store.dispatch('setData', this.name)
 
       this.$router.push('/profile/' + 0 + '/' + 0)
     }
-    // per () {
-    //   this.$router.push('/personal')
-    // },
-    // pro () {
-    //   this.$router.push('/profile')
-    // },
-    // exp () {
-    //   this.$router.push('/expertise')
-    // },
-    // int () {
-    //   this.$router.push('/interview')
-    // }
   }
 }
 </script>
@@ -383,24 +346,24 @@ input[type="radio"] {
   font-weight: 400;
 }
 
-#progressbar #account:before {
-  font-family: FontAwesome;
-  content: "\f13e";
-}
-
 #progressbar #personal:before {
   font-family: FontAwesome;
-  content: "\f007";
+  content: "✓";
 }
 
-#progressbar #payment:before {
+#progressbar #profile:before {
   font-family: FontAwesome;
-  content: "\f030";
+  content: "✓";
 }
 
-#progressbar #confirm:before {
+#progressbar #expertise:before {
   font-family: FontAwesome;
-  content: "\f00c";
+  content: "✓";
+}
+
+#progressbar #interview:before {
+  font-family: FontAwesome;
+  content: "✓";
 }
 
 #progressbar li:before {
@@ -447,4 +410,4 @@ input[type="radio"] {
   width: 100%;
   object-fit: cover;
 }
-</style>>
+</style>
