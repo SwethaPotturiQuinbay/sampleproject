@@ -34,7 +34,7 @@
             <input type="text" v-model="name" name="name" placeholder="Name" />
           </div>
           <div class="side">
-            <label class="control-label requiredField" for="email">
+           <div class="email"> <label class="control-label requiredField" for="email">
               Email :<span style="color: red">*</span>
             </label>
             <input
@@ -43,11 +43,8 @@
               v-model="email"
               type="email"
             />
-          </div>
-          <div>
-            <span v-show="wrongEmail" style="color: red"
-              >Incorrect email address</span
-            >
+            <p v-show="wrongEmail" style="color: red">Incorrect email address</p>
+            </div>
           </div>
           <div class="side">
             <label class="fieldlabels">Mobile</label>
@@ -57,7 +54,7 @@
               v-model="value"
               name="mobile"
               placeholder="Mobile Number"
-              @input="acceptNumber"
+            @input="acceptNumber"
             />
           </div>
           <div class="way" >
@@ -118,6 +115,7 @@
 <script>
 import swal from 'sweetalert'
 const emailRe =
+  // eslint-disable-next-line no-useless-escape
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 export default {
   data () {
@@ -143,7 +141,6 @@ export default {
     this.graduationDate = localStorage.getItem('graduationDate')
     this.radiooption = localStorage.getItem('univerradio')
     this.taxvalue = localStorage.getItem('taxid')
-    console.log('radio value' + this.radiooption)
   },
   methods: {
     isEmailValid () {
@@ -157,6 +154,7 @@ export default {
       var x = this.value
         .replace(/\D/g, '')
         .match(/(\d{0,3})(\d{0,3})(\d{0,4})/)
+
       this.value = !x[2]
         ? x[1]
         : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '')
@@ -184,8 +182,7 @@ export default {
       localStorage.setItem('graduationDate', this.graduationDate)
       localStorage.setItem('univerradio', this.radiooption)
       localStorage.setItem('taxid', this.taxvalue)
-
-      this.$router.push('/profile/' + 0 + '/' + 0)
+      this.$router.push('/profile')
     }
   }
 }
@@ -272,6 +269,8 @@ p {
 .button{
   background-color: #673ab7;
   text-align: center;
+  border-radius:15px;
+
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
@@ -322,7 +321,6 @@ input[type="radio"] {
 }
 .steps {
   font-size: 25px;
-  /* color: gray; */
   margin-bottom: 10px;
   font-weight: normal;
   text-align: right;
@@ -402,12 +400,15 @@ input[type="radio"] {
 .progress-bar {
   background-color: #673ab7;
 }
-/* .fieldlabels {
-  color: black;
-  text-align: left;
-} */
 .fit-image {
   width: 100%;
   object-fit: cover;
+}
+.email{
+  display: block;
+}
+.email p{
+  margin-left: 180px;
+  margin-top: 4px;
 }
 </style>

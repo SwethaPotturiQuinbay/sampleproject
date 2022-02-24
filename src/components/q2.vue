@@ -2,35 +2,22 @@
     <div class="question">
       <h2 class="fs-title">Question 2</h2>
     <h3 class="fs-subtitle">What do you consider your main strengths to be?</h3>
-    <!--<p class="help-block">List your strengths here.</p>-->
-    <textarea class="form-control" name="CAT_Custom_1" v-model="q2" id="CAT_Custom_1" rows="4" onkeydown="if(this.value.length>=4000)this.value=this.value.substring(0,3999);"></textarea>
-    <!-- <input type="button" name="next" class="next action-button" value="Next" /> -->
+    <textarea class="form-control" name="questionone" v-model="quesTwo" id="questiontwo" cols="50" rows="4" onkeydown="if(this.value.length>=4000)this.value=this.value.substring(0,3999);"></textarea>
     <div>
     <button id="btnn" @click="submit()">Submit Question 2</button></div>
     </div>
 </template>
 <script>
-// export default {
-//   data () {
-//     return {
-//       checkedbox: []
-//     }
-//   },
-//   methods: {
-//     addItem () {
-//       // const array = []
-//       // array.push(...this.checkedbox)
-//       // localStorage.setItem('Checked List', JSON.stringify(array))
-//       localStorage.setItem('Question 2', this.q2)
-//     }
-//   }
-// }
 import swal from 'sweetalert'
 export default{
   data () {
     return {
-      q2: null
+      quesTwo: null,
+      storepropthree: this.q3
     }
+  },
+  created () {
+    this.quesTwo = localStorage.getItem('QuestionTwo')
   },
   methods: {
     submit () {
@@ -39,7 +26,8 @@ export default{
       } else if (!localStorage.getItem('QuestionOne')) {
         swal('', 'Enter Questions Above', 'error')
       } else {
-        localStorage.setItem('QuestionTwo', this.q2)
+        localStorage.setItem('QuestionTwo', this.quesTwo)
+        this.$emit('enablequestwo', {storepropthree: false})
         this.$emit('updatestep', 2)
         swal('', 'Question added', 'success')
       }
@@ -51,10 +39,9 @@ export default{
 #btnn{
     background-color: #673ab7;
     color: white;
-  /* margin-left: 200px; */
   height:40px;
   width: 100px;
-  /* margin-bottom: 5px; */
+  margin-bottom: 20px;
   align-items: center;
 }
 </style>

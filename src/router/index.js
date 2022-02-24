@@ -12,17 +12,17 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/helloworld',
       name: 'HelloWorld',
       component: HelloWorld
     },
     {
-      path: '/personal',
+      path: '/',
       name: 'personal',
       component: personal
     },
     {
-      path: '/profile/:i/:j',
+      path: '/profile',
       name: 'profile',
       component: profile
     },
@@ -32,7 +32,7 @@ export default new Router({
       component: interview
     },
     {
-      path: '/expertise/:i/:j',
+      path: '/expertise',
       name: 'expertise',
       component: expertise
     },

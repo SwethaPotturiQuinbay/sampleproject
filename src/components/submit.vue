@@ -1,138 +1,131 @@
 <template>
-  <div>
-    <div class="container-fluid">
-      <div class="row justify-content-center">
-        <br />
-        <div class="form-card">
-          <div class="side">
-            <label class="fieldlabels">Name: </label>
-            <span>{{name}}</span>
-          </div>
-          <div class="side">
-            <label class="control-label requiredField" for="email">
-              Email :
-            </label>
-            <span></span>
-          </div>
-          <div class="side">
-            <label class="fieldlabels">Mobile</label>
-            <span></span>
-          </div>
-          <div class="way"></div>
-          <div class="sides">
-            <label class="fieldlabels">University: </label>
-            <span></span>
-          </div>
-          <div class="side">
-            <label class="fieldlabels">Major: </label>
-            <span></span>
-          </div>
-          <div class="sid">
-            <label class="fieldlabels">Graduation Date: </label>
-          </div>
-          <div class="side"></div>
-
-          <!-- <div>
-            <button class="button" @click="exit()">Exit</button>
-          </div> -->
+  <div class="boxes">
+    <center>
+        <div class="boxtable">
+      <table cellpadding="0" cellspacing="0">
+        <tbody>
+          <tr>
+            <td><label class="fieldlabels">Name</label></td>
+            <td>
+              <span>{{ name }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td><label class="fieldlabels"> Email </label></td>
+            <td>
+              <span>{{ email }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td><label class="fieldlabels">Mobile</label></td>
+            <td>
+              <span>{{ value }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td><label class="fieldlabels">University</label></td>
+            <td>
+              <span>{{ university }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td><label class="fieldlabels">Major </label></td>
+            <td>
+              <span>{{ major }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label class="fieldlabels">Graduation Date</label>
+            </td>
+            <td>
+              <span>{{ graduationDate }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label class="fieldlabels"> About You </label>
+            </td>
+            <td>
+              <span>{{ aboutYou }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label class="fieldlabels"> Teaching Experience </label>
+            </td>
+            <td>
+              <span>{{ teachingExperience }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
         </div>
-        <div class="buttons">
-          <div>
-            <button class="button" @click="previous()">Previous</button>
-          </div>
-          <div>
-            <!-- <button class="button" onclick="window.localStorage.clear();">
+        <div class="but">
+            <button class="button" @click="abc()">
               Exit
-            </button> -->
+            </button>
           </div>
-        </div>
-      </div>
-    </div>
+    </center>
   </div>
 </template>
 <script>
 export default {
-    data(){
-        // props :["name"]
-    },
+  created () {
+    this.name = localStorage.getItem('name')
+    this.email = localStorage.getItem('email')
+    this.value = localStorage.getItem('value')
+    this.university = localStorage.getItem('university')
+    this.major = localStorage.getItem('major')
+    this.graduationDate = localStorage.getItem('graduationDate')
+    this.aboutYou = localStorage.getItem('aboutYou')
+    this.teachingExperience = localStorage.getItem('teachingExperience')
+  },
   methods: {
-    previous() {
-      this.$router.push("/interview");
+    abc () {
+      localStorage.clear()
+      this.$router.push('/')
     }
-    // clearLocalStorage() {
-    //   localStorage.clear();
-    // }
   }
 }
 </script>
-<style scoped>
-* {
-  margin: 0;
-  padding: 0;
+<style>
+.boxes {
+  padding-top: 50px;
 }
-.form-card {
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: column;
+table tbody tr td {
   text-align: left;
-  padding: 50px;
-  align-items: center;
+  vertical-align: middle;
+  padding-top: 20px;
 }
-.form-card label {
-  text-align: left;
+.boxtable{
+    background-color: #673ab7;
+    width: 400px;
+    height:370px;
+    border-radius:15px;
+    color:white;
 }
-html {
-  height: 100%;
-}
-.side {
-  display: flex;
-  margin-bottom: 20px;
-}
-.sides {
-  display: flex;
-  margin-bottom: 20px;
-  margin-right: 30px;
-}
-.sid {
-  display: flex;
-  margin-bottom: 20px;
-  margin-right: 80px;
-}
-/* .button{
-  background-color: #673ab7;
-  text-align: center;
-  text-decoration: none;
+table tbody tr td:nth-child(2):before {
+  content: ":";
   display: inline-block;
-  font-size: 16px;
-  width:100px;
-  color: white;
-} */
-.buttons {
-  display: flex;
-  justify-content: space-around;
+  padding-left: 10px;
+  margin-right: 10px;
+}
+.but {
+  align-content: center;
+  align-items: center;
+  padding-top:20px;
 }
 .button {
   background-color: #673ab7;
+  border: 1px white solid;
+  border-radius:15px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
   width: 100px;
   color: white;
-}
-.container-fluid {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.purple-text {
-  color: #673ab7;
-  font-weight: normal;
-}
-
-.way {
-  margin-left: -140px;
-  display: flex;
-  margin-bottom: 20px;
+  height:30px
 }
 </style>

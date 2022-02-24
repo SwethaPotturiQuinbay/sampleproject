@@ -5,7 +5,7 @@
         <h2 id="heading">Sample Project</h2>
         <form id="msform">
           <ul id="progressbar">
-            <li id="personal" class="active">
+            <li id="personal" class="active" @click="per()">
               <strong>Personal</strong>
             </li>
             <li id="profile" class="active">
@@ -150,9 +150,9 @@ export default {
       enrolled: null,
       graduated: null,
       addwork: [{ work: '', activeFrom: '', activeTo: '' }],
-      addworkone:[],
-      addeducation: [{education: '',graduated:'',enrolled:'' }],
-      addeducationone:[],
+      addworkone: [],
+      addeducation: [{ education: '', graduated: '', enrolled: '' }],
+      addeducationone: [],
       addanotherjob: false,
       addanotherschool: false,
       work: null,
@@ -162,58 +162,18 @@ export default {
   created () {
     this.aboutYou = localStorage.getItem('aboutYou')
     this.teachingExperience = localStorage.getItem('teachingExperience')
-    console.log(localStorage.getItem('addWork'))
-    console.log(localStorage.getItem('addEducation'))
-    let hello = localStorage.getItem('addWork')
-  //  this.addworkone = JSON.parse(localStorage.getItem('addWork'))
-  if(localStorage.getItem('addWork')!==null){
-   this.addwork = JSON.parse(localStorage.getItem('addWork'))
-  }
-  if(localStorage.getItem('addEducation')!==null){
-   this.addeducation = JSON.parse(localStorage.getItem('addEducation'))
-  }
-  //  this.addeducationone = JSON.parse(localStorage.getItem('addEducation'))
-
-   console.log('trying to console addworkone')
-   console.log('addworkone',this.addworkone)
-  //  console.log("gdgfddgdghfgfgh",localStorage.get('addworkone'))
-  //  console.log('i', n)
-  //  console.log(this.addworkone[1], 'rghdhuakjHSzrdjksbxghjvbdfxcgbvjdnfxbgcjndfbxcgjbvfngcbvfbcgm')
-    // for (let l = 0; l <this.addwork.length; l++) {
-    //   this.addwork[l].activeFrom = this.addworkone[l].activeFrom
-    //   this.addwork[l].activeTo = this.addworkone[l].activeTo
-    //   this.addwork[l].work = this.addworkone[l].work
-    //   console.log(this.addwork[l], 'hammayya')
-    // }
-  //   let s = this.$route.params.i
-  //  console.log('i', s)
-  //   for (let l = 0; l <= s+1; l++) {
-  //     this.addeducation[l].graduated = this.addeducationone[l].graduated
-  //     this.addeducation[l].enrolled = this.addeducationone[l].enrolled
-  //     this.addeducation[l].education = this.addeducationone[l].education
-  //     console.log(this.addeducation[l], 'hello')
-  //   }
+    if (localStorage.getItem('addWork') !== null) {
+      this.addwork = JSON.parse(localStorage.getItem('addWork'))
+    }
+    if (localStorage.getItem('addEducation') !== null) {
+      this.addeducation = JSON.parse(localStorage.getItem('addEducation'))
+    }
   },
-  //   for (let t = 0; t <= n; t++) {
-  //     console.log('education' + t, localStorage.getItem('education' + t))
-  //     this.addeducation[t].education = localStorage.getItem('education' + t)
-  //     this.addeducation[t].enrolled = localStorage.getItem('enrolled' + t)
-  //     this.addeducation[t].graduated = localStorage.getItem('graduated' + t)
-  //   }
-  // },
-  // mounted () {
-  //   let m = this.$route.params.i
-  //   console.log('m' + m)
-  //   for (let l = 0; l <= m; l++) {
-  //     console.log('work' + l, localStorage.getItem('work' + l))
-  //     this.addwork[l].work = localStorage.getItem('work' + l)
-  //     this.addwork[l].activeFrom = localStorage.getItem('active From' + l)
-  //     this.addwork[l].activeTo = localStorage.getItem('active To' + l)
-  //   }
-  // },
   methods: {
+    per () {
+      this.$router.push('/')
+    },
     async next () {
-      console.log(this.addwork[0].activeFrom)
       if (
         this.aboutYou === null ||
         this.teachingExperience === null ||
@@ -230,7 +190,7 @@ export default {
         })
         return
       }
-      for (let i=0;i<this.addwork.length;i++) {
+      for (let i = 0; i < this.addwork.length; i++) {
         if (this.addwork[i].activeTo < this.addwork[i].activeFrom) {
           console.log('Hi')
           swal({
@@ -252,20 +212,10 @@ export default {
       localStorage.setItem('teachingExperience', this.teachingExperience)
       localStorage.setItem('addWork', JSON.stringify(this.addwork))
       localStorage.setItem('addEducation', JSON.stringify(this.addeducation))
-      // for (let t = 0; t <= this.i; t++) {
-      //   localStorage.setItem('work' + t, this.addwork[t].work)
-      //   localStorage.setItem('active From' + t, this.addwork[t].activeFrom)
-      //   localStorage.setItem('active To' + t, this.addwork[t].activeTo)
-      // }
-      // for (let t = 0; t <= this.j; t++) {
-      //   localStorage.setItem('education' + t, this.addeducation[t].education)
-      //   localStorage.setItem('enrolled' + t, this.addeducation[t].enrolled)
-      //   localStorage.setItem('graduated' + t, this.addeducation[t].graduated)
-      // }
-      this.$router.push('/expertise/' + this.i + '/' + this.j)
+      this.$router.push('/expertise/')
     },
     previous () {
-      this.$router.push('/personal')
+      this.$router.push('/')
     },
     addField () {
       const index = this.addwork.length - 1
@@ -294,7 +244,6 @@ export default {
         obj['graduated'] = ''
         this.addeducation.push(obj)
         console.log(this.addeducation)
-        // this.j = this.j + 1
       }
     }
   }
@@ -414,6 +363,7 @@ export default {
 }
 .button {
   background-color: #673ab7;
+  border-radius:15px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -429,82 +379,6 @@ export default {
   padding: 50px;
   align-items: center;
 }
-
-/* #progressbar {
-  margin-bottom: 30px;
-  overflow: hidden;
-  color: lightgrey;
-}
-
-#progressbar .active {
-  color: #673ab7;
-}
-
-#progressbar li {
-  list-style-type: none;
-  font-size: 15px;
-  width: 25%;
-  float: left;
-  position: relative;
-  font-weight: 400;
-}
-
-#progressbar #account:before {
-  font-family: FontAwesome;
-  content: "\f13e";
-}
-
-#progressbar #personal:before {
-  font-family: FontAwesome;
-  content: "\f007";
-}
-
-#progressbar #payment:before {
-  font-family: FontAwesome;
-  content: "\f030";
-}
-
-#progressbar #confirm:before {
-  font-family: FontAwesome;
-  content: "\f00c";
-}
-
-#progressbar li:before {
-  width: 50px;
-  height: 50px;
-  line-height: 45px;
-  display: block;
-  font-size: 20px;
-  color: #ffffff;
-  background: lightgray;
-  border-radius: 50%;
-  margin: 0 auto 10px auto;
-  padding: 2px;
-}
-
-#progressbar li:after {
-  content: "";
-  width: 100%;
-  height: 2px;
-  background: lightgray;
-  position: absolute;
-  left: 0;
-  top: 25px;
-  z-index: -1;
-}
-
-#progressbar li.active:before,
-#progressbar li.active:after {
-  background: #673ab7;
-}
-
-.progress {
-  height: 20px;
-}
-
-.progress-bar {
-  background-color: #673ab7;
-} */
 #progressbar {
   margin-bottom: 30px;
   overflow: hidden;
@@ -585,6 +459,5 @@ export default {
   color: #673ab7;
   font-weight: normal;
 }
-
 
 </style>

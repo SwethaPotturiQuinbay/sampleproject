@@ -1,21 +1,15 @@
 <template>
     <div>
 <div class="box">
-  <label><input type="checkbox" v-model="checkedbox" name="cplusplus" value="C++">C++</label>
-  <label><input type="checkbox" v-model="checkedbox" name="ds" value="ds">ds</label>
-  <label ><input type="checkbox" v-model="checkedbox" name="Django" value="Django">Django</label>
-  <label ><input type="checkbox" v-model="checkedbox" name="js" value="js">js</label>
-  <label ><input type="checkbox" v-model="checkedbox" name="CSS" value="CSS"> CSS</label>
-  <label ><input type="checkbox" v-model="checkedbox" name="java" value="java">java</label>
-  <label ><input type="checkbox" v-model="checkedbox" name="HTML" value="HTML">HTML </label>
-  <label ><input type="checkbox" v-model="checkedbox" name="springboot" value="spring boot">spring boot</label>
-  <label ><input type="checkbox" v-model="checkedbox" name="vuejs" value="vue js">vue js</label>
-  <label ><input type="checkbox"  v-model="checkedbox" name="python" value="python">python</label>
-  <label ><input type="checkbox" v-model="checkedbox" name="Go" value="Go">Go</label>
-  <label ><input type="checkbox" v-model="checkedbox" name="C" value="C">C </label>
+  <div class="list">
+  <div v-for="item in list" :key="item.id">
+    <div>
+    <li>
+      <input type="checkbox" v-model="item.checked" @click="addItem(item.text,item.id)">{{item.text}}
+    </li>
+    </div>
+  </div>
 </div>
-<div>
-  <button id="btnn" @click="addItem()">Save</button>
 </div>
     </div>
 </template>
@@ -23,40 +17,84 @@
 export default {
   data () {
     return {
-      checkedbox: []
+      list: [
+        {id: 0, text: 'python', checked: false},
+        {id: 1, text: 'C++', checked: false},
+        {id: 2, text: 'java', checked: false},
+        {id: 3, text: 'C', checked: false},
+        {id: 4, text: 'js', checked: false},
+        {id: 5, text: 'vue js', checked: false},
+        {id: 6, text: 'angular js', checked: false},
+        {id: 7, text: 'R', checked: false},
+        {id: 8, text: 'DS', checked: false},
+        {id: 9, text: 'oops', checked: false},
+        {id: 10, text: 'Go', checked: false},
+        {id: 11, text: 'kotlin', checked: false},
+        {id: 12, text: 'html', checked: false},
+        {id: 13, text: 'CSS', checked: false},
+        {id: 14, text: 'SQL', checked: false},
+        {id: 15, text: 'mongo db', checked: false},
+        {id: 16, text: 'PHP', checked: false}],
+      checkedbox: [],
+      flag: true
+    }
+  },
+  created () {
+    if (localStorage.getItem('engineering')) {
+      this.checkedbox = JSON.parse(localStorage.getItem('engineering'))
+      for (let i = 0; i < this.checkedbox.length; i++) {
+        for (let j = 0; j < this.list.length; j++) {
+          if (this.list[j].text === this.checkedbox[i]) {
+            this.list[j].checked = true
+          }
+        }
+      }
     }
   },
   methods: {
-    addItem () {
-      const array = []
-      array.push(...this.checkedbox)
-      localStorage.setItem('Checked List engineering', JSON.stringify(array))
+    addItem (itemName, itemId) {
+      for (let i = 0; i <= this.checkedbox.length - 1; i++) {
+        if (this.checkedbox[i] === itemName) {
+          var newArray = this.checkedbox.filter((item) => item !== itemName)
+          this.checkedbox = newArray
+          this.flag = false
+        }
+      }
+      if (this.flag === true) {
+        this.checkedbox.push(itemName)
+      }
+      this.flag = true
+      this.$emit('onGetListThree', this.checkedbox)
     }
   }
 }
 </script>
 <style scoped>
-*{ box-sizing: border-box; }
+#checkboxes label {
+  float: left;
+}
+#checkboxes div {
+  margin: 0;
+  list-style: none;
+  float: left;
+}
+.list{
+  padding-left: 100px;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap:60px;
+    align-items: flex-start;
 
-.box {
-  display: flex;
-  flex-wrap: wrap;
+}
+li{
+  display:block;
+}
+input[type=checkbox]{
+  vertical-align: middle;
+  position: relative;
+  bottom: 1px;
 }
 
-label {
-  flex: 1 0 25%;
-  white-space: nowrap;
-  padding: 5px;
-}
-#btnn{
-    background-color: #673ab7;
-    color: white;
-  height:30px;
-  width: 100px;
-  align-items: center;
-}
-input {
-  display: inline;
-  padding:30px
-}
 </style>

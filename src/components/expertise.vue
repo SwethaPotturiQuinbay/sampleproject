@@ -5,8 +5,8 @@
             <h2 id="heading">Sample Project</h2>
             <form id="msform">
               <ul id="progressbar">
-                <li id="personal" class="active" ><strong>Personal</strong></li>
-                <li id="profile" class="active" ><strong>Profile</strong></li>
+                <li id="personal" class="active" @click="per()"><strong>Personal</strong></li>
+                <li id="profile" class="active" @click="pro()"><strong>Profile</strong></li>
                 <li id="expertise" class="active" ><strong>Expertise</strong></li>
                 <li id="interview" ><strong>Interview</strong></li>
               </ul>
@@ -25,14 +25,14 @@
       </div>
     <div class="box">
       <div class="list">
-        <p @click="activeTab='computersoftware'">Computer Software </p>
-        <p @click="activeTab='computerscience'">Computer Science</p>
-        <p @click="activeTab='engineering'">Engineering</p>
+        <div class="abc" @click="activeTab='computersoftware'">Computer Software </div>
+        <div class="abc" @click="activeTab='computerscience'">Computer Science</div>
+        <div class="abc" @click="activeTab='engineering'">Engineering</div>
       </div>
       <div class="options">
-        <computersoftware v-if="activeTab === 'computersoftware'" :source="checkedbox" @save="save"/>
-        <computerscience v-if="activeTab === 'computerscience'"/>
-        <engineering v-if="activeTab === 'engineering'"/>
+        <computersoftware v-if="activeTab === 'computersoftware'" @onGetList="onGetList"/>
+        <computerscience v-if="activeTab === 'computerscience'" @onGetListTwo="onGetListTwo"/>
+        <engineering v-if="activeTab === 'engineering'" @onGetListThree="onGetListThree"/>
       </div>
     </div>
                 <div class="buttons">
@@ -46,77 +46,104 @@
   </div>
 </template>
 <script>
-import progressbar from '@/components/progressbar'
 import computersoftware from './computersoftware.vue'
 import computerscience from './computerscience.vue'
 import engineering from './engineering.vue'
+import swal from 'sweetalert'
 export default {
   data () {
     return {
-      activeTab: 'computersoftware'
+      activeTab: 'computersoftware',
+      hello: [],
+      arrayfortwo: [],
+      arrayforthree: []
     }
   },
+  created () {
+    this.hello = JSON.parse(localStorage.getItem('computersoftware'))
+    this.arrayfortwo = JSON.parse(localStorage.getItem('computerscience'))
+  },
   components: {
-    progressbar,
     computersoftware,
     engineering,
     computerscience
   },
   methods: {
-    save (obj) {
-      if (obj.number === 1) {
-        const array = []
-        this.checkedbox.push(...obj.check)
-        array.push(...this.checkedbox)
-        localStorage.setItem('checkone', JSON.stringify(array))
-      }
+    per () {
+      this.$router.push('/')
     },
-    created () {
-      this.taxvalue = localStorage.getItem('taxvalue')
+    pro () {
+      this.$router.push('/profile')
+    },
+    onGetList (lis) {
+      this.hello = lis
+      localStorage.setItem('computersoftware', JSON.stringify(this.hello))
     },
     next () {
-      this.$router.push('/interview')
+      if (localStorage.getItem('computersoftware') == null) {
+        swal('', 'Check some items', 'error')
+      } else {
+        this.$router.push('/interview')
+      }
+    },
+    onGetListTwo (lisTwo) {
+      this.arrayfortwo = lisTwo
+      localStorage.setItem('computerscience', JSON.stringify(this.arrayfortwo))
+    },
+    onGetListThree (lisThree) {
+      this.arrayforthree = lisThree
+      localStorage.setItem('engineering', JSON.stringify(this.arrayforthree))
     },
     previous () {
-      let i = this.$route.params.i
-      console.log('i', i)
-      for (let t = 0; t <= i; t++) {
-        console.log(t)
-        localStorage.getItem('work' + t)
-        localStorage.getItem('active From' + t)
-        localStorage.getItem('active To' + t)
-      }
-      let j = this.$route.params.j
-      console.log('j', j)
-      this.$router.push('/profile/' + i + '/' + j)
-    },
-    componeclicked () {
-      this.$emit('componeclicked', this.item)
+      this.$router.push('/profile')
     }
   }
 }
 </script>
 <style scoped>
-.box {
-  display: flex;
-  justify-content: center;
-  margin-left:100px;
+.options{
+    margin: auto;
+    margin-top:40px;
+    width: 50%;
+    padding: 10px;
+    height:480px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 90px;
 }
-.list {
+#checkboxes label {
+  float: left;
+}
+#checkboxes div {
+  margin: 0;
+  list-style: none;
+  float: left;
+}
+.listcheck{
+    height: 450px;
     display: flex;
     flex-direction: column;
-    justify-content: wrap;
-  padding-right: 100px;
-  align-items: right;
+    flex-wrap: wrap;
 }
-.options{
-    border: 1px solid black;
-    width: 60%;
+.box{
+  display: flex;
 }
-p {
-  border: 1px solid black;
-  background-color: whitesmoke;
+.list{
+margin-left:150px;
+  margin-top: 40px;
+
 }
+.abc{
+  height:40px;
+  width:150px;
+  border-radius: 15px;
+  background-color: #673ab7;
+  margin-bottom:5px;
+  cursor: pointer;
+  color:white;
+  padding-top: 10px;
+}
+
 #progressbar {
   margin-bottom: 30px;
   overflow: hidden;
@@ -199,6 +226,8 @@ p {
 }
 .button{
   background-color: #673ab7;
+  border-radius:15px;
+
   text-align: center;
   text-decoration: none;
   display: inline-block;

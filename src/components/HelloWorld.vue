@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <Personal/>
     <!-- <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <ul>
@@ -92,6 +93,12 @@
 //     }
 //   }
 // }
+import personal from '@/components/personal.vue'
+export default{
+  components: {
+    personal
+  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

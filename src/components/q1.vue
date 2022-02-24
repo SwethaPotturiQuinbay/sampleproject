@@ -3,45 +3,33 @@
     <div class="question">
       <h2 class="fs-title">Question 1</h2>
     <h3 class="fs-subtitle">What do you consider your main strengths to be?</h3>
-    <textarea class="form-control" name="CAT_Custom_1" v-model="q1" id="CAT_Custom_1" rows="4" cols="80" onkeydown="if(this.value.length>=4000)this.value=this.value.substring(0,3999);"></textarea>
+    <textarea class="form-control" name="questiontwo" v-model="quesOne" id="questionone" rows="5" cols="50" onkeydown="if(this.value.length>=4000)this.value=this.value.substring(0,3999);"></textarea>
     <div>
     <button id="btnn" @click="submit()">Submit Question 1</button></div>
     </div>
 </template>
 <script>
-// export default {
-//   data () {
-//     return {
-//       checkedbox: []
-//     }
-//   },
-//   methods: {
-//     addItem () {
-//       // const array = []
-//       // array.push(...this.checkedbox)
-//       // localStorage.setItem('Checked List', JSON.stringify(array))
-//       localStorage.setItem('Question 1', this.q1)
-//       // this.$router.push('/q2')
-//     }
-//   }
-// }
 import swal from 'sweetalert'
 export default{
   data () {
     return {
-      q1: null
+      quesOne: null,
+      storeprop: this.q2
     }
+  },
+  created () {
+    this.quesOne = localStorage.getItem('QuestionOne')
   },
   methods: {
     submit () {
       if (localStorage.getItem('QuestionOne')) {
         swal('', 'cannot enter twice', 'error')
       } else {
-        localStorage.setItem('QuestionOne', this.q1)
+        localStorage.setItem('QuestionOne', this.quesOne)
+        this.$emit('enablequesone', {storeprop: false})
         this.$emit('updatestep', 1)
         swal('', 'Question added', 'success')
       }
-      this.name = localStorage.getItem('q1')
     }
   }
 }
@@ -50,13 +38,11 @@ export default{
 #btnn{
     background-color: #673ab7;
     color: white;
-  /* margin-left: 200px; */
   height:40px;
   width: 100px;
-  /* margin-bottom: 5px; */
+
+  margin-top: 20px;
   align-items: center;
 }
-.question .form-control input[type="textarea"]{
-  width:100px
-}
+
 </style>
